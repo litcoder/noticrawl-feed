@@ -1,0 +1,15 @@
+@startuml
+-> Collector: fetch_latest()
+Collector -> Client**: new()
+Client --> Collector: instance
+Collector -> Collector: get_fetch_urls()
+Collector -> Client: REST API call
+Client --> Collector: Response
+loop for all items in response
+  alt should be kept
+    Collector -> Collector: map_item_to_announcement(Response)
+    Collector -> Collector: should_keep(Announcement)
+    Collector -> IndexSet: insert(Announcement)
+  end
+end
+@enduml

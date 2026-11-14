@@ -1,0 +1,15 @@
+@startuml
+Collector <|-- RestApiCollector
+RestApiCollector <|.. KStartupCollector
+RestApiCollector <|.. BizInfoCollector
+
+class Collector {
+    identifier()
+    base_url()
+    fetch_lastest()
+}
+
+class RestApiCollector {
+    api_key()
+}
+@enduml

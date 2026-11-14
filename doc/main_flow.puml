@@ -1,0 +1,23 @@
+@startuml
+-> Monitor: check()
+loop for all Collectors
+  Monitor -> Collector: fetch_latest()
+  Collector --> Monitor: contents[]
+
+  loop for all announcements:
+    Monitor -> Database: is_new(Announcement)
+    Database -> Database: calculate_hash(Announcement)
+
+    alt new announcement
+      Database --> Monitor: true
+      Monitor -> Database: mark_as_notified(Announcement)
+      Monitor -> Monitor: add_announcement(Announcement)
+    end
+  end
+
+  Monitor -> AI: summarize(announcement_contents)
+  AI --> Monitor: summary
+  Monitor -> Notifier: publish_rss(summary)
+  Monitor -> Notifier: notify_teams(NotiMessage)
+end
+@enduml

@@ -1,0 +1,18 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "rust",
+      "extra-types": ["feat", "fix", "perf", "refactor", "ci", "chore"],
+      "bump-patch-for-types": ["refactor", "perf", "ci"],
+      "bump-minor-pre-major": true,
+      "changelog-sections": [
+        { "type": "feat", "section": "Features", "hidden": false },
+        { "type": "fix", "section": "Bug Fixes", "hidden": false },
+        { "type": "perf", "section": "Performance Improvements", "hidden": false },
+        { "type": "refactor", "section": "Code Refactorings", "hidden": false },
+        { "type": "ci", "section": "CI Updates", "hidden": false },
+        { "type": "chore", "section": "Miscellaneous", "hidden": false }
+      ]
+    }
+  }
+}

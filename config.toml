@@ -1,0 +1,57 @@
+[database]
+file_path = "noticrawl.db"
+
+[cron]
+# Cron scheduler for 15:30pm.
+schedules = [
+    "0 30 17 * * *"
+]
+
+# Time zone : UTC + 9(9 * 60 * 60)
+time_zone = 32400
+
+[database.sqlpath.announcement]
+create_table = "sql/create_announcement_table.sql"
+check_exist = "sql/check_announcement_exist.sql"
+upsert = "sql/upsert_announcement.sql"
+
+[notification]
+notify = true
+url = "" # MS teams power automate URL로 대체
+
+[publication]
+publish = true
+url = "" # Github API로 대체
+page = "" # Github static page repo로 대체
+branch = "main"
+
+[collector.kstartup]
+url = "https://apis.data.go.kr/B552735/kisedKstartupService01/getAnnouncementInformation01"
+search_supported = true
+
+[collector.bizinfo]
+url = "https://www.bizinfo.go.kr/uss/rss/bizinfoApi.do"
+num_announcements = 10
+search_supported = false
+
+[collector.enara]
+url = "https://apis.data.go.kr/1051000/MoefOpenAPI/T_OPD_PBNS"
+num_announcements = 10
+search_supported = true
+search_terms = ["스타트업"]
+
+[collector.naramarket]
+url = "https://apis.data.go.kr/1230000/ao/PubDataOpnStdService/getDataSetOpnStdBidPblancInfo"
+num_announcements = 10
+search_supported = false
+search_terms = ["AI", "인공지능", "엣지", "온디바이스", "추론", "영상분석", "인식", "감지"]
+
+[collector.smtech]
+url = "https://www.smes.go.kr/fnct/apiReqst/extPblancInfo"
+search_supported = false
+
+[gemini]
+temperature = 0.5
+max_output_tokens = 5000
+connection_timeout_secs = 10
+request_timeout_secs = 40

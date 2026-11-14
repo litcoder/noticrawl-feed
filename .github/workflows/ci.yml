@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Use ci_keys environment.
+    environment: ci_keys
+
+    env:
+      CARGO_TERM_COLOR: always
+      PUBLICATION_KEY: ${{ secrets.PUBLICATION_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      KSTARTUP_KEY: ${{ secrets.KSTARTUP_KEY }}
+      BIZINFO_KEY: ${{ secrets.BIZINFO_KEY }}
+      ENARA_KEY: ${{ secrets.ENARA_KEY }}
+      SMTECH_KEY: ${{ secrets.SMTECH_KEY }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: rustfmt, clippy
+
+    - name: Check Formatting (rustfmt)
+      run: cargo fmt --all -- --check
+
+    - name: Build
+      run: cargo build --verbose
+
+    - name: Run tests
+      run: cargo test --verbose
